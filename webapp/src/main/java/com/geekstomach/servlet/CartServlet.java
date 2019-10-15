@@ -14,6 +14,6 @@ import java.io.IOException;
 public class CartServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(CartServlet.class);
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("mainPage.jsp").forward(req, resp);
+        req.getRequestDispatcher("cartPage.jsp").forward(req, resp);
     }
 }
