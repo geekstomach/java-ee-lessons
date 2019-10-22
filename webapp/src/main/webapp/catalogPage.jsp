@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -5,12 +6,12 @@
 </head>
 <body>
     <h1>Каталог товаров</h1>
-    <ul>
-        <li><a href="main">Главная страница</a></li>
-        <li><a href="catalog">Каталог товаров</a></li>
-        <li><a href="product">Товар</a></li>
-        <li><a href="cart">Корзина</a></li>
-        <li><a href="order">Оформление заказа</a></li>
+    <%@include file="menu.jspf"%>
+  <%--  <jsp:useBean id="ProductList" class="com.geekstomach.entity.ProductsList" scope="request"/>--%>
+ <ul>
+    <c:forEach items="${productsList}" var="product">
+<li>${product.toString()}</li>
+    </c:forEach>
     </ul>
 </body>
 </html>
