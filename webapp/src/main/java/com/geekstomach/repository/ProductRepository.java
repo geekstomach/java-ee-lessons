@@ -27,13 +27,15 @@ public class ProductRepository {
     @PostConstruct
     public void init() throws SQLException {
         this.connection = dataSource.getConnection();
-
+        
+        createTableIfNotExists(connection);
+        
         if (this.findAll().isEmpty()) {
             this.insert(new Product(-1L, "First", new BigDecimal("100.0")));
             this.insert(new Product(-1L, "Second",new BigDecimal("200.0")));
             this.insert(new Product(-1L, "Third", new BigDecimal("300.0")));
         }
-        createTableIfNotExists(connection);
+        
 
     }
 
