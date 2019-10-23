@@ -7,11 +7,5 @@
 <body>
     <h1>Каталог товаров</h1>
     <%@include file="menu.jspf"%>
-  <%--  <jsp:useBean id="ProductList" class="com.geekstomach.entity.ProductsList" scope="request"/>--%>
- <ul>
-    <c:forEach items="${productsList}" var="product">
-<li>${product.toString()}</li>
-    </c:forEach>
-    </ul>
 </body>
 </html>

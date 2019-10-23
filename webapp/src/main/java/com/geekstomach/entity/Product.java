@@ -1,27 +1,24 @@
 package com.geekstomach.entity;
 
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 
+@Slf4j
+@Data
 public class Product {
     private Long id;
     private String productName;
     private BigDecimal price;
-    public Product(){
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", productName='" + productName + '\'' +
-                ", price=" + price +
-                '}';
-    }
 
     public Product(Long id, String productName, BigDecimal price) {
         this.id = id;
         this.productName = productName;
         this.price = price;
+    }
+
+    public Product() {
+
     }
 
     public Long getId() {
