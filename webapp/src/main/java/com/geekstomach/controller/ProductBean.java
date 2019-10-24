@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -16,10 +17,14 @@ import java.util.List;
 @Named
 public class ProductBean implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(ProductBean.class);
+
     @Inject
     private ProductRepository productRepository;
 
     private Product product;
+
+    private List<Product> productList;
+
     public Product getProduct() {
         return product;
     }
@@ -27,8 +32,12 @@ public class ProductBean implements Serializable {
         this.product = product;
     }
 
+    public void preloadProductList(ComponentSystemEvent componentSystemEvent){
+        this.productList = productRepository.findAll();
+}
+
     public List<Product> getAllProduct() throws SQLException {
-        return productRepository.findAll();
+        return productList;
 
     }
 

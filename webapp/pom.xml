@@ -46,12 +46,23 @@
       <artifactId>cdi-api</artifactId>
       <version>2.0.SP1</version>
     </dependency>
-
+<!--Для работы Java persistence api (JPA) в реализации Hibernate 3 зависимости + соннектор для БД-->
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.28</version>
-      <scope>provided</scope>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+      <version>1.0.2.Final</version>
+      <scope>provided</scope> <!--Реализацию предоставляет сервер приложений-->
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.4.4.Final</version>
+      <scope>provided</scope> <!--Реализацию предоставляет сервер приложений-->
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.0.17.Final</version> <!--Реализацию предоставляет сервер приложений-->
     </dependency>
 
     <dependency>
@@ -60,7 +71,14 @@
       <version>8.0.17</version>
       <scope>runtime</scope>
     </dependency>
-
+    <!--Логгер-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.28</version>
+      <scope>provided</scope>
+    </dependency>
+    <!--Тесты-->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

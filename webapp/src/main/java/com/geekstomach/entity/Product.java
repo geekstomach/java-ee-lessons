@@ -1,25 +1,32 @@
 package com.geekstomach.entity;
 
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Slf4j
-@Data
+
+@Entity
+@Table(name = "products")
 public class Product {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String productName;
+    @Column
     private BigDecimal price;
 
+    public Product() {
+
+    }
     public Product(Long id, String productName, BigDecimal price) {
         this.id = id;
         this.productName = productName;
         this.price = price;
     }
 
-    public Product() {
-
-    }
 
     public Long getId() {
         return id;
@@ -29,6 +36,7 @@ public class Product {
         this.id = id;
     }
 
+
     public String getProductName() {
         return productName;
     }
@@ -37,6 +45,7 @@ public class Product {
         this.productName = productName;
     }
 
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -44,4 +53,6 @@ public class Product {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+
 }
