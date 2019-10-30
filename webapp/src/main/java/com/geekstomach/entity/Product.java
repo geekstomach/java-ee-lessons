@@ -19,8 +19,8 @@ public class Product {
     private BigDecimal price;
 
     public Product() {
-
     }
+
     public Product(Long id, String productName, BigDecimal price) {
         this.id = id;
         this.productName = productName;

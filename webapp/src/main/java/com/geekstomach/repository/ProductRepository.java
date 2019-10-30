@@ -22,13 +22,14 @@ public class ProductRepository {
     @PersistenceContext(unitName = "ds")
     private EntityManager entityManager;
 
+
     @PostConstruct
     public void init(){
-        if (this.findAll().isEmpty()) {
+/*        if (this.findAll().isEmpty()) {
             this.insert(new Product(-1L, "First", new BigDecimal("100.0")));
             this.insert(new Product(-1L, "Second", new BigDecimal("200.0")));
             this.insert(new Product(-1L, "Third", new BigDecimal("300.0")));
-        }
+        }*/
     }
 
     @Transactional
@@ -46,6 +47,7 @@ public class ProductRepository {
         Product product = entityManager.find(Product.class, id);
         if (product != null) {
             entityManager.remove(product);
+
         }
     }
 
@@ -55,7 +57,7 @@ public class ProductRepository {
 
 
     public List<Product> findAll() {
-        return entityManager.createQuery("from Product" , Product.class).getResultList();
+        return entityManager.createQuery("from Product", Product.class).getResultList();
     }
 }
 
