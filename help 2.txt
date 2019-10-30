@@ -1,0 +1,82 @@
+При установке сервера приложений нужно: задать юзера в add-user.bat.
+										прописать переменные среды
+Для запуска скриптов нужно: запустить сервер standalone.bat
+							зайти в коммандную строку cmd
+							перейти в коталог в котором лежат файлы скриптов cd C:\Users\Orange\IdeaProjects\java-ee-lessons\webapp\
+B еще
+	в скрипте мы пишем
+	module add \
+	   --name=com.mysql.driver \
+	и драйвер качается в папку module.com.mysql.driver
+	и так не работает
+	я его перенес в папку modules\system\layers\base\com\mysql\driver\main
+
+jboss-cli.bat --connect --file=mysql-module.cli
+
+		1)The command accepts 1 unnamed argument(s) but received: [add, EE\Unit, 1\mysql-connector-java-5.1.48]
+		08:38:38,291 ERROR [org.jboss.as.controller.management-operation] (management-handler-thread - 1) WFLYCTL0013: Operation ("add") failed - address: ([
+    ("subsystem" => "datasources"),
+    ("data-source" => "MySQLDS")
+]) - failure description: {
+    "WFLYCTL0412: Required services that are not installed:" => ["jboss.jdbc-driver.mysql"],
+    "WFLYCTL0180: Services with missing/unavailable dependencies" => [
+        "jboss.driver-demander.java:/jboss/datasources/MySQLDS is missing [jboss.jdbc-driver.mysql]",
+        "org.wildfly.data-source.MySQLDS is missing [jboss.jdbc-driver.mysql]"
+    ]
+}
+Исправил адрес на "без пробела"
+		2){
+			"outcome" => "failed",
+			"failure-description" => "WFLYJCA0034: Unable to instantiate driver class \"com.mysql.jdbc.Driver\". See log (WARN) for more details",
+			"rolled-back" => true
+		}
+		08:47:32,025 WARN  [org.jboss.as.connector.subsystems.datasources] (management-handler-thread - 1) WFLYJCA0003: Unable to instantiate driver class "com.mysql.jdbc.Driver": java.lang.ClassNotFoundException: com.mysql.jdbc.Driver from [Module "com.mysql.driver" from local module loader @5f2108b5 (finder: local module finder @31a5c39e (roots: E:\geekstomach\Java EE\Unit 1\wildfly-17.0.1.Final\modules,E:\geekstomach\Java EE\Unit 1\wildfly-17.0.1.Final\modules\system\layers\base))]
+08:47:32,026 ERROR [org.jboss.as.controller.management-operation] (management-handler-thread - 1) WFLYCTL0013: Operation ("add") failed - address: ([
+    ("subsystem" => "datasources"),
+    ("jdbc-driver" => "mysql")
+]) - failure description: "WFLYJCA0034: Unable to instantiate driver class \"com.mysql.jdbc.Driver\". See log (WARN) for more details"
+
+Добавил в файле mysql-module к пути к папке имя файла mysql-connector-java-5.1.48-bin.jar.
+		3)Module com.mysql.driver already exists at E:\geekstomach\Java EE\Unit 1\wildfly-17.0.1.Final\modules\com\mysql\driver\main
+Модуль создан, и там есть драйвер и module.xml
+
+		<?xml version='1.0' encoding='UTF-8'?>
+
+		<module xmlns="urn:jboss:module:1.1" name="com.mysql.driver">
+
+			<resources>
+				<resource-root path="mysql-connector-java-5.1.48"/>
+			</resources>
+
+			<dependencies>
+				<module name="javax.api"/>
+				<module name="javax.transaction.api"/>
+			</dependencies>
+		</module>
+Мытался в ручную в standalone.xml драйвер прикрутить
+	<driver name="mysql" module="com.mysql.driver">
+        <driver-class>com.mysql.jdbc.Driver</driver-class>
+    </driver>
+jboss-cli.bat --connect --file=datasource.cli
+
+		1)
+		{"WFLYCTL0062: Composite operation failed and was rolled back. Steps that failed:" => 
+		{"Operation step-1" => {"WFLYCTL0412: Required services that are not installed:" => 
+		["jboss.jdbc-driver.mysql"],"WFLYCTL0180: Services with missing/unavailable dependencies" => 
+		["jboss.driver-demander.java:/jboss/datasources/MySQLDS is missing [jboss.jdbc-driver.mysql]","
+		org.wildfly.data-source.MySQLDS is missing [jboss.jdbc-driver.mysql]"]}}}
+Полсе борьбы с первым скриптом все равно
+		2)08:57:21,455 ERROR [org.jboss.as.controller.management-operation] (management-handler-thread - 1) WFLYCTL0013: Operation ("add") failed - address: ([
+			("subsystem" => "datasources"),
+			("data-source" => "MySQLDS")
+		]) - failure description: {
+			"WFLYCTL0412: Required services that are not installed:" => ["jboss.jdbc-driver.mysql"],
+			"WFLYCTL0180: Services with missing/unavailable dependencies" => [
+				"org.wildfly.data-source.MySQLDS is missing [jboss.jdbc-driver.mysql]",
+				"jboss.driver-demander.java:/jboss/datasources/MySQLDS is missing [jboss.jdbc-driver.mysql]"
+			]
+		}	
+		3) {"WFLYCTL0062: Composite operation failed and was rolled back. Steps that failed:" =>
+		{"Operation step-1" => {"WFLYCTL0412: Required services that are not installed:" => 
+		["jboss.jdbc-driver.mysql"],"WFLYCTL0180: Services with missing/unavailable dependencies" => 
+		["jboss.driver-demander.java:/jboss/datasources/MySQLDS is missing [jboss.jdbc-driver.mysql]","org.wildfly.data-source.MySQLDS is missing [jboss.jdbc-driver.mysql]"]}}}		
