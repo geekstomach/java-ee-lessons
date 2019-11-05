@@ -5,6 +5,7 @@ import com.geekstomach.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
@@ -20,6 +21,9 @@ public class ProductBean implements Serializable {
 
     @Inject
     private ProductRepository productRepository;
+    //использование бина из другого приложения через интерфейс remote
+/* @EJB(lookup = "java:global/users/UserServiceImlpl!com.geekstomach.UserService")
+private UserService userService;*/
 
     private Product product;
 

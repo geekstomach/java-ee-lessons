@@ -7,6 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="webapp" />
+        <module name="users-impl" />
+        <module name="users-api" />
+        <module name="ejb-client" />
       </profile>
     </annotationProcessing>
   </component>

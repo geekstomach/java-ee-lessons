@@ -1,21 +1,21 @@
 package com.geekstomach.repository;
 
 import com.geekstomach.entity.Product;
+import com.geekstomach.util.LoggerForWebapp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.List;
 
-@ApplicationScoped
-@Named //бинами управляет контейнер, а точнее CLI
-public class ProductRepository {
+@Stateless
+
+public class ProductRepository implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
 
@@ -32,17 +32,17 @@ public class ProductRepository {
         }*/
     }
 
-    @Transactional
+    @TransactionAttribute
     public void insert(Product product) {
         entityManager.persist(product);
     }
 
-    @Transactional
+    @TransactionAttribute
     public void update(Product product) {
         entityManager.merge(product);
     }
 
-    @Transactional
+    @TransactionAttribute
     public void delete(long id) {
         Product product = entityManager.find(Product.class, id);
         if (product != null) {
@@ -55,7 +55,7 @@ public class ProductRepository {
         return entityManager.find(Product.class, id);
     }
 
-
+@Interceptors({LoggerForWebapp.class})
     public List<Product> findAll() {
         return entityManager.createQuery("from Product", Product.class).getResultList();
     }
