@@ -20,6 +20,13 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <!--позволяет разрабатывать REST-сервисы на Java-->
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.1.1</version>
+      <scope>provided</scope>
+    </dependency>
     <!--для создания Сервлета добовляем зависимость-->
     <dependency>
       <groupId>javax.servlet</groupId>
