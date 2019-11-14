@@ -5,6 +5,8 @@ import com.geekstomach.util.LoggerForWebapp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.interceptor.Interceptors;
@@ -14,7 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-
+@PermitAll
 public class ProductRepository implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
@@ -31,17 +33,17 @@ public class ProductRepository implements Serializable {
             this.insert(new Product(-1L, "Third", new BigDecimal("300.0")));
         }*/
     }
-
+    @RolesAllowed("ADMIN")
     @TransactionAttribute
     public void insert(Product product) {
         entityManager.persist(product);
     }
-
+    @RolesAllowed("ADMIN")
     @TransactionAttribute
     public void update(Product product) {
         entityManager.merge(product);
     }
-
+    @RolesAllowed("ADMIN")
     @TransactionAttribute
     public void delete(long id) {
         Product product = entityManager.find(Product.class, id);

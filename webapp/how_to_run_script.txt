@@ -1,0 +1,11 @@
+При установке сервера приложений нужно: задать юзера в add-user.bat.
+										прописать переменные среды
+Для запуска скриптов нужно: запустить сервер standalone.bat
+							зайти в коммандную строку cmd
+							перейти в коталог в котором лежат файлы скриптов cd C:\Users\Orange\IdeaProjects\java-ee-lessons\webapp\
+Следующей коммандой прописываем скрипт в standalone.xml
+jboss-cli.bat --connect --file=security-config.cli
+
+
+P.S.
+Конфигурируем web.xml
